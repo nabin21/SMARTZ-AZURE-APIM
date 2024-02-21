@@ -1,4 +1,5 @@
 export type Values = {
+  title: string
   label1: string
   label2: string
   placeholder: string
@@ -6,8 +7,9 @@ export type Values = {
 }
 
 export const valuesDefault: Readonly<Values> = Object.freeze({
-  label1: "Email",
-  label2: "Message",
-  placeholder: "Write your message here",
+  title: "Register Application",
+  label1: "Name",
+  label2: "Type",
+  placeholder: "Please select application type",
   actionUrl: "https://httpbin.org/post",
 })
