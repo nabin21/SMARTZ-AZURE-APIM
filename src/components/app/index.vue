@@ -10,7 +10,7 @@
     </div>
     <div class="form-group height-fill flex-columns-container">
       <label for="type" class="form-label">{{ configs.label2 }}</label>
-      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" />
+      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" v-model="applicationType" />
     </div>
     <div class="form-group">
       <button type="submit" class="button button-primary" @click="submit">Submit</button>
@@ -50,6 +50,10 @@ export default {
       axios.post(this.configs.actionUrl, {
         Name: this.applicationName,
         Type: this.applicationType
+      }, {
+        headers: {
+          'x-context-user': '65b883e14634610a882015cf'
+        }
       }).then((response) => {
         console.log(response)
       })

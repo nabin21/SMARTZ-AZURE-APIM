@@ -45,6 +45,7 @@ export default {
       label2: "Type",
       placeholder2: "Please select application type",
       actionUrl: "https://httpbin.org/post",
+      valuesDefault
     }
   },
 
