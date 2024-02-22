@@ -1,36 +1,39 @@
 <style src="../../styles/app.scss"></style>
 
 <template>
-  <form :action="actionUrl" method="post" target="_blank"
-        class="flex-columns-container register-app-form">
-    <div class="title">{{ title }}</div>
+  <div class="flex-columns-container register-app-form">
+    <div class="title">{{ configs.title }}</div>
     <div class="form-group">
-      <label for="email" class="form-label">{{ label1 }}</label>
-      <input id="email" type="email" class="form-control" name="email" placeholder="Please enter application name"
+      <label for="name" class="form-label">{{ configs.label1 }}</label>
+      <input id="name" class="form-control" name="name" :placeholder="configs.placeholder1"
              v-model="applicationName" />
     </div>
     <div class="form-group height-fill flex-columns-container">
-      <label for="message" class="form-label">{{ label2 }}</label>
-      <input id="message" class="form-control" name="message" :placeholder="placeholder" />
+      <label for="type" class="form-label">{{ configs.label2 }}</label>
+      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" />
     </div>
     <div class="form-group">
-      <button type="submit" class="button button-primary">Submit</button>
+      <button type="submit" class="button button-primary" @click="submit">Submit</button>
     </div>
-  </form>
+  </div>
 </template>
 
 <script lang="ts">
 import {getValues} from "@azure/api-management-custom-widgets-tools"
 import {valuesDefault} from "../../values"
+import axios from 'axios';
 
 export default {
   data() {
     return {
-      title: null,
-      label1: null,
-      label2: null,
-      placeholder: null,
-      actionUrl: null,
+      configs: {
+        title: '',
+        label1: '',
+        placeholder1: '',
+        label2: '',
+        placeholder2: '',
+        actionUrl: '',
+      },
       applicationName: null,
       applicationType: null
     }
@@ -39,12 +42,18 @@ export default {
   inject: ["secretsPromise", "requestPromise"],
 
   async mounted(): Promise<void> {
-    const editorData = getValues(valuesDefault)
-    this.title = editorData.title
-    this.label1 = editorData.label1
-    this.label2 = editorData.label2
-    this.placeholder = editorData.placeholder
-    this.actionUrl = editorData.actionUrl
+    this.configs = getValues(valuesDefault)
   },
+
+  methods: {
+    submit() {
+      axios.post(this.configs.actionUrl, {
+        Name: this.applicationName,
+        Type: this.applicationType
+      }).then((response) => {
+        console.log(response)
+      })
+    }
+  }
 }
 </script>

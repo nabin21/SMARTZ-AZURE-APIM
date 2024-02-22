@@ -3,21 +3,30 @@
 <template>
   <div class="form">
     <div class="form-group">
-      <label for="actionUrl" class="form-label">Label 1</label>
-      <input id="actionUrl" type="text" class="form-control" v-model="label1" :placeholder="valuesDefault.label1" />
+      <label class="form-label">Title</label>
+      <input type="text" class="form-control" v-model="title" placeholder="Please enter title" />
     </div>
     <div class="form-group">
-      <label for="actionUrl" class="form-label">Label 2</label>
-      <input id="actionUrl" type="text" class="form-control" v-model="label2" :placeholder="valuesDefault.label2" />
+      <label class="form-label">Label 1</label>
+      <input type="text" class="form-control" v-model="label1" :placeholder="valuesDefault.label1" />
     </div>
     <div class="form-group">
-      <label for="actionUrl" class="form-label">Placeholder</label>
-      <input id="actionUrl" type="text" class="form-control" v-model="placeholder"
-             :placeholder="valuesDefault.placeholder" />
+      <label class="form-label">Placeholder 1</label>
+      <input type="text" class="form-control" v-model="placeholder1"
+             :placeholder="valuesDefault.placeholder2" />
     </div>
     <div class="form-group">
-      <label for="actionUrl" class="form-label">Action URL</label>
-      <input id="actionUrl" type="text" class="form-control" v-model="actionUrl"
+      <label class="form-label">Label 2</label>
+      <input type="text" class="form-control" v-model="label2" :placeholder="valuesDefault.label2" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Placeholder 2</label>
+      <input type="text" class="form-control" v-model="placeholder2"
+             :placeholder="valuesDefault.placeholder2" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Action URL</label>
+      <input type="text" class="form-control" v-model="actionUrl"
              :placeholder="valuesDefault.actionUrl" />
     </div>
   </div>
@@ -30,11 +39,12 @@ import {Values, valuesDefault} from "../../values"
 export default {
   data() {
     return {
-      label1: "Email",
-      label2: "Message",
-      placeholder: "Write your message here",
+      title: "Register Application",
+      label1: "Name",
+      placeholder1: "Please select application name",
+      label2: "Type",
+      placeholder2: "Please select application type",
       actionUrl: "https://httpbin.org/post",
-      valuesDefault,
     }
   },
 
@@ -43,21 +53,29 @@ export default {
 
     const editorData = getEditorValues<Values>()
 
+    this.title = editorData.title
     this.label1 = editorData.label1
+    this.placeholder1 = editorData.placeholder1
     this.label2 = editorData.label2
-    this.placeholder = editorData.placeholder
+    this.placeholder2 = editorData.placeholder2
     this.actionUrl = editorData.actionUrl
   },
 
   watch: {
+    title(newValue: string): void {
+      this.onChange({title: newValue})
+    },
     label1(newValue: string): void {
       this.onChange({label1: newValue})
+    },
+    placeholder1(newValue: string): void {
+      this.onChange({placeholder1: newValue})
     },
     label2(newValue: string): void {
       this.onChange({label2: newValue})
     },
-    placeholder(newValue: string): void {
-      this.onChange({placeholder: newValue})
+    placeholder2(newValue: string): void {
+      this.onChange({placeholder2: newValue})
     },
     actionUrl(newValue: string): void {
       this.onChange({actionUrl: newValue})
