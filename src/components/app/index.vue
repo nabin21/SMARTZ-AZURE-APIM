@@ -82,11 +82,16 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        toast.success('Registration success');
+        toast.success('Registration success')
+        this.resetForm()
       }).catch(() => {
         this.loading = false
-        toast.error('Registration failed');
+        toast.error('Registration failed')
       })
+    },
+    resetForm() {
+      this.applicationName = null
+      this.applicationType = null
     }
   }
 }
