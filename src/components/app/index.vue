@@ -2,14 +2,17 @@
 
 <template>
   <div class="flex-columns-container register-app-form">
-    <div class="form-group required">
+    <div class="form-group required" :class="{ 'has-warning': warning.name }">
       <label for="name" class="form-label">{{ configs.label1 }}</label>
-      <input id="name" class="form-control" name="name" :placeholder="configs.placeholder1"
-             v-model="applicationName" />
+      <input id="name" class="form-control" name="name" :placeholder="configs.placeholder1" v-model="applicationName"
+        @blur="applicationNameChanged" />
+      <div v-if="warning.name" class="warning-message">Application name is required!</div>
     </div>
-    <div class="form-group required">
+    <div class="form-group required" :class="{ 'has-warning': warning.type }">
       <label for="type" class="form-label">{{ configs.label2 }}</label>
-      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" v-model="applicationType" />
+      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" v-model="applicationType"
+        @blur="applicationTypeChanged" />
+      <div v-if="warning.type" class="warning-message">Application type is required!</div>
     </div>
     <div class="form-group text-center">
       <button class="button button-primary submit-button" @click="submit" :disabled="loading">
@@ -21,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import {getValues} from "@azure/api-management-custom-widgets-tools"
-import {valuesDefault} from "../../values"
+import { getValues } from "@azure/api-management-custom-widgets-tools"
+import { valuesDefault } from "../../values"
 import axios from 'axios';
-import swal from 'sweetalert';
+import { useToast } from "vue-toastification";
 
 export default {
   data() {
@@ -39,7 +42,11 @@ export default {
       },
       applicationName: null,
       applicationType: null,
-      loading: false
+      loading: false,
+      warning: {
+        name: false,
+        type: false
+      }
     }
   },
 
@@ -50,7 +57,21 @@ export default {
   },
 
   methods: {
+    applicationNameChanged() {
+      this.warning.name = !this.applicationName
+    },
+    applicationTypeChanged() {
+      this.warning.type = !this.applicationType
+    },
     submit() {
+      const toast = useToast();
+      if (!this.applicationName || !this.applicationType) {
+        this.warning = {
+          name: !this.applicationName,
+          type: !this.applicationType
+        }
+        return;
+      }
       this.loading = true
       axios.post(this.configs.actionUrl, {
         Name: this.applicationName,
@@ -61,10 +82,10 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        swal("Success", "Registration success.", "success");
+        toast.success('Registration success');
       }).catch(() => {
         this.loading = false
-        swal("Error", "Registration failed.", "error");
+        toast.error('Registration failed');
       })
     }
   }

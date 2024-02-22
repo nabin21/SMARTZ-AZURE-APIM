@@ -1,13 +1,14 @@
 @import "reboot.scss";
 
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: Open Sans;
 }
 
 .form-label {
   padding: 5px 0;
   display: block;
   font-weight: 400;
+  font-weight: bold;
 }
 
 .form-group {
@@ -99,6 +100,7 @@ textarea {
     position: relative;
     width: 200px;
     height: 40px;
+    font-weight: bold;
   }
   
   .submit-button .spinner {
@@ -112,6 +114,15 @@ textarea {
     width: 20px;
     height: 20px;
     animation: spin 1s linear infinite;
+  }
+
+  .has-warning input {
+    border-color: #f56c6c;
+  }
+  
+  .warning-message {
+    color: #f56c6c;
+    font-size: 12px;
   }
 }
 

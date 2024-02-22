@@ -1,6 +1,8 @@
 import {createApp} from "vue"
 import {askForSecrets} from "@azure/api-management-custom-widgets-tools"
 import App from "./components/app/index.vue"
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 const secretsPromise = askForSecrets("app")
 const requestPromise = new Promise(async (resolve) => {
@@ -14,5 +16,6 @@ const requestPromise = new Promise(async (resolve) => {
 const app = createApp(App)
   .provide("secretsPromise", secretsPromise)
   .provide("requestPromise", requestPromise)
-
+  
+app.use(Toast, {});
 app.mount("#root")
