@@ -8,6 +8,7 @@ const name = "cw-register-application-form"
 const fallbackConfigPath = "./static/config.msapim.json"
 const config = {
 	"interactiveBrowserCredentialOptions": {
+		"tenantId":"f276ea54-4df7-4144-94a6-efb2f25b1055",
 		"redirectUri": "http://localhost:1337"
 	}
 }
