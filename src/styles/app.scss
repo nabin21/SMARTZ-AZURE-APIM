@@ -82,11 +82,44 @@ textarea {
   }
 }
 
+.text-center {
+  text-align: center;
+}
+
 .register-app-form {
-  padding: 20px;
-  .title {
-    text-align: center;
-    font-weight: bold;
-    margin: 20px auto;
+  .required {
+    .form-label::before {
+      content: "*";
+      color: #f56c6c;
+      margin-right: 4px;
+    }
+  }
+
+  .submit-button {
+    position: relative;
+    width: 200px;
+    height: 40px;
+  }
+  
+  .submit-button .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }

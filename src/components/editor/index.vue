@@ -3,10 +3,6 @@
 <template>
   <div class="form">
     <div class="form-group">
-      <label class="form-label">Title</label>
-      <input type="text" class="form-control" v-model="title" placeholder="Please enter title" />
-    </div>
-    <div class="form-group">
       <label class="form-label">Label 1</label>
       <input type="text" class="form-control" v-model="label1" :placeholder="valuesDefault.label1" />
     </div>
@@ -25,6 +21,10 @@
              :placeholder="valuesDefault.placeholder2" />
     </div>
     <div class="form-group">
+      <label class="form-label">Button Text</label>
+      <input type="text" class="form-control" v-model="buttonText" />
+    </div>
+    <div class="form-group">
       <label class="form-label">Action URL</label>
       <input type="text" class="form-control" v-model="actionUrl"
              :placeholder="valuesDefault.actionUrl" />
@@ -39,12 +39,12 @@ import {Values, valuesDefault} from "../../values"
 export default {
   data() {
     return {
-      title: "Register Application",
       label1: "Name",
-      placeholder1: "Please select application name",
+      placeholder1: "Please enter application name",
       label2: "Type",
-      placeholder2: "Please select application type",
-      actionUrl: "https://httpbin.org/post",
+      placeholder2: "Please enter application type",
+      buttonText: 'Register Now',
+      actionUrl: "https://devapp.smartzhealth.com/api/tapplication/register",
       valuesDefault
     }
   },
@@ -54,18 +54,15 @@ export default {
 
     const editorData = getEditorValues<Values>()
 
-    this.title = editorData.title
     this.label1 = editorData.label1
     this.placeholder1 = editorData.placeholder1
     this.label2 = editorData.label2
     this.placeholder2 = editorData.placeholder2
+    this.buttonText = editorData.buttonText
     this.actionUrl = editorData.actionUrl
   },
 
   watch: {
-    title(newValue: string): void {
-      this.onChange({title: newValue})
-    },
     label1(newValue: string): void {
       this.onChange({label1: newValue})
     },
@@ -77,6 +74,9 @@ export default {
     },
     placeholder2(newValue: string): void {
       this.onChange({placeholder2: newValue})
+    },
+    buttonText(newValue: string): void {
+      this.onChange({buttonText: newValue})
     },
     actionUrl(newValue: string): void {
       this.onChange({actionUrl: newValue})
