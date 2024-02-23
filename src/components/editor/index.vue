@@ -21,6 +21,15 @@
              :placeholder="valuesDefault.placeholder2" />
     </div>
     <div class="form-group">
+      <label class="form-label">Label 3</label>
+      <input type="text" class="form-control" v-model="label2" :placeholder="valuesDefault.label3" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Placeholder 3</label>
+      <input type="text" class="form-control" v-model="placeholder3"
+             :placeholder="valuesDefault.placeholder3" />
+    </div>
+    <div class="form-group">
       <label class="form-label">Button Text</label>
       <input type="text" class="form-control" v-model="buttonText" />
     </div>
@@ -43,6 +52,8 @@ export default {
       placeholder1: "Please enter application name",
       label2: "Type",
       placeholder2: "Please enter application type",
+      label3: "Link Key",
+      placeholder3: "Please enter link key (optional)",
       buttonText: 'Register Now',
       actionUrl: "https://devapp.smartzhealth.com/api/tapplication/register",
       valuesDefault
@@ -58,6 +69,8 @@ export default {
     this.placeholder1 = editorData.placeholder1
     this.label2 = editorData.label2
     this.placeholder2 = editorData.placeholder2
+    this.label3 = editorData.label3
+    this.placeholder3 = editorData.placeholder3
     this.buttonText = editorData.buttonText
     this.actionUrl = editorData.actionUrl
   },
@@ -74,6 +87,12 @@ export default {
     },
     placeholder2(newValue: string): void {
       this.onChange({placeholder2: newValue})
+    },
+    label3(newValue: string): void {
+      this.onChange({label3: newValue})
+    },
+    placeholder3(newValue: string): void {
+      this.onChange({placeholder3: newValue})
     },
     buttonText(newValue: string): void {
       this.onChange({buttonText: newValue})

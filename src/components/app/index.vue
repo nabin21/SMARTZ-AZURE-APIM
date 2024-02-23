@@ -14,6 +14,10 @@
         @blur="applicationTypeChanged" />
       <div v-if="warning.type" class="warning-message">Application type is required!</div>
     </div>
+    <div class="form-group">
+      <label for="linkKey" class="form-label">{{ configs.label3 }}</label>
+      <input id="linkKey" class="form-control" name="linkKey" :placeholder="configs.placeholder3" v-model="applicationLinkKey" />
+    </div>
     <div class="form-group text-center">
       <button class="button button-primary submit-button" @click="submit" :disabled="loading">
         <span v-if="loading" class="spinner"></span>
@@ -37,11 +41,14 @@ export default {
         placeholder1: '',
         label2: '',
         placeholder2: '',
+        label3: '',
+        placeholder3: '',
         buttonText: '',
         actionUrl: '',
       },
       applicationName: null,
       applicationType: null,
+      applicationLinkKey: null,
       loading: false,
       warning: {
         name: false,
@@ -75,7 +82,8 @@ export default {
       this.loading = true
       axios.post(this.configs.actionUrl, {
         Name: this.applicationName,
-        Type: this.applicationType
+        Type: this.applicationType,
+        LinkKey: this.applicationLinkKey
       }, {
         headers: {
           'x-context-user': '65b883e14634610a882015cf'
