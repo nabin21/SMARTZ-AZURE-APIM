@@ -1,6 +1,8 @@
 <style src="../../styles/app.scss"></style>
 
 <template>
+  <applicationList />
+  <h1 class="section-title">{{ configs.title2 }}</h1>
   <div class="flex-columns-container register-app-form">
     <div class="form-group required" :class="{ 'has-warning': warning.name }">
       <label for="name" class="form-label">{{ configs.label1 }}</label>
@@ -32,11 +34,14 @@ import { getValues } from "@azure/api-management-custom-widgets-tools"
 import { valuesDefault } from "../../values"
 import axios from 'axios';
 import { useToast } from "vue-toastification";
+import applicationList from "./applicationList.vue";
 
 export default {
   data() {
     return {
       configs: {
+        title1: '',
+        title2: '',
         label1: '',
         placeholder1: '',
         label2: '',
@@ -54,6 +59,10 @@ export default {
         type: false
       }
     }
+  },
+
+  components: {
+    applicationList
   },
 
   inject: ["secretsPromise", "requestPromise"],

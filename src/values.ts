@@ -1,4 +1,6 @@
 export type Values = {
+  title1: string
+  title2: string
   label1: string
   placeholder1: string
   label2: string
@@ -9,6 +11,8 @@ export type Values = {
 }
 
 export const valuesDefault: Readonly<Values> = Object.freeze({
+  title1: 'Application List',
+  title2: 'Register Application',
   label1: "Name",
   placeholder1: "Please enter application name",
   label2: "Type",

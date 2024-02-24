@@ -125,6 +125,20 @@ textarea {
   }
 }
 
+.text-a {
+  cursor: pointer;
+  margin-left: 5px;
+  color: #1265eb;
+  text-decoration: underline;
+  &:hover {
+    font-weight: bold;
+  }
+}
+.section-title {
+  text-align: center;
+  margin: 30px auto;
+}
+
 @keyframes spin {
   0% {
     transform: translate(-50%, -50%) rotate(0deg);

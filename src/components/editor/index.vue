@@ -3,13 +3,13 @@
 <template>
   <div class="form">
     <div class="form-group">
-      <label class="form-label">Label 1</label>
-      <input type="text" class="form-control" v-model="label1" :placeholder="valuesDefault.label1" />
+      <label class="form-label">Title 1</label>
+      <input type="text" class="form-control" v-model="title1" :placeholder="valuesDefault.title1" />
     </div>
     <div class="form-group">
-      <label class="form-label">Placeholder 1</label>
-      <input type="text" class="form-control" v-model="placeholder1"
-             :placeholder="valuesDefault.placeholder2" />
+      <label class="form-label">Title 2</label>
+      <input type="text" class="form-control" v-model="title2"
+             :placeholder="valuesDefault.title2" />
     </div>
     <div class="form-group">
       <label class="form-label">Label 2</label>
@@ -43,6 +43,8 @@ import {Values, valuesDefault} from "../../values"
 export default {
   data() {
     return {
+      title1: 'Application List',
+      title2: 'Register Application',
       label1: "Name",
       placeholder1: "Please enter application name",
       label2: "Type",
@@ -59,6 +61,8 @@ export default {
 
     const editorData = getEditorValues<Values>()
 
+    this.title1 = editorData.title1
+    this.title2 = editorData.title2
     this.label1 = editorData.label1
     this.placeholder1 = editorData.placeholder1
     this.label2 = editorData.label2
@@ -69,6 +73,12 @@ export default {
   },
 
   watch: {
+    title1(newValue: string): void {
+      this.onChange({title1: newValue})
+    },
+    title2(newValue: string): void {
+      this.onChange({title2: newValue})
+    },
     label1(newValue: string): void {
       this.onChange({label1: newValue})
     },
