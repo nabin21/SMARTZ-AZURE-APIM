@@ -44,7 +44,6 @@ export default {
         label3: '',
         placeholder3: '',
         buttonText: '',
-        actionUrl: '',
       },
       applicationName: null,
       applicationType: null,
@@ -80,7 +79,7 @@ export default {
         return;
       }
       this.loading = true
-      axios.post(this.configs.actionUrl, {
+      axios.post('https://devapp.smartzhealth.com/api/tapplication/register', {
         Name: this.applicationName,
         Type: this.applicationType,
         LinkKey: this.applicationLinkKey

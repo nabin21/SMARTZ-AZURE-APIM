@@ -6,7 +6,6 @@ export type Values = {
   label3: string
   placeholder3: string
   buttonText: string
-  actionUrl: string
 }
 
 export const valuesDefault: Readonly<Values> = Object.freeze({
@@ -17,5 +16,4 @@ export const valuesDefault: Readonly<Values> = Object.freeze({
   label3: "Link Key",
   placeholder3: "Please enter link key (optional)",
   buttonText: 'Register Now',
-  actionUrl: "https://devapp.smartzhealth.com/api/tapplication/register",
 })

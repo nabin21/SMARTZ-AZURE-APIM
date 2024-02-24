@@ -33,11 +33,6 @@
       <label class="form-label">Button Text</label>
       <input type="text" class="form-control" v-model="buttonText" />
     </div>
-    <div class="form-group">
-      <label class="form-label">Action URL</label>
-      <input type="text" class="form-control" v-model="actionUrl"
-             :placeholder="valuesDefault.actionUrl" />
-    </div>
   </div>
 </template>
 
@@ -55,7 +50,6 @@ export default {
       label3: "Link Key",
       placeholder3: "Please enter link key (optional)",
       buttonText: 'Register Now',
-      actionUrl: "https://devapp.smartzhealth.com/api/tapplication/register",
       valuesDefault
     }
   },
@@ -72,7 +66,6 @@ export default {
     this.label3 = editorData.label3
     this.placeholder3 = editorData.placeholder3
     this.buttonText = editorData.buttonText
-    this.actionUrl = editorData.actionUrl
   },
 
   watch: {
@@ -96,9 +89,6 @@ export default {
     },
     buttonText(newValue: string): void {
       this.onChange({buttonText: newValue})
-    },
-    actionUrl(newValue: string): void {
-      this.onChange({actionUrl: newValue})
     },
   },
 }
