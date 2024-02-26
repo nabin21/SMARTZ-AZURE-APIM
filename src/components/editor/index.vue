@@ -70,7 +70,7 @@ export default {
       label3: "Subscription Key",
       placeholder3: "Please enter your subscription key",
       label4: "Link Key",
-      placeholder4: "Please enter organization's link key (optional)",
+      placeholder4: "Please enter organisation's link key (optional)",
       buttonText: 'Register Now',
       valuesDefault
     }

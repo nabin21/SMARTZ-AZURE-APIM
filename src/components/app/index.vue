@@ -38,9 +38,9 @@
 <script lang="ts">
 import { getValues } from "@azure/api-management-custom-widgets-tools"
 import { valuesDefault } from "../../values"
-import axios from 'axios';
 import { useToast } from "vue-toastification";
 import applicationList from "./applicationList.vue";
+import api from "../../api"
 
 export default {
   data() {
@@ -104,15 +104,11 @@ export default {
         return;
       }
       this.loading = true
-      axios.post('https://devapp.smartzhealth.com/api/tapplication/register', {
+      api.registerApplication({
         Name: this.form.name,
         Type: this.form.type,
         LinkKey: this.form.linkKey
-      }, {
-        headers: {
-          'x-context-user': this.form.subscriptionKey
-        }
-      }).then((response) => {
+      }, this.form.subscriptionKey).then((response) => {
         this.loading = false
         toast.success('Registration success')
         this.resetForm()
