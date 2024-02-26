@@ -7,6 +7,8 @@ export type Values = {
   placeholder2: string
   label3: string
   placeholder3: string
+  label4: string
+  placeholder4: string
   buttonText: string
 }
 
@@ -17,7 +19,9 @@ export const valuesDefault: Readonly<Values> = Object.freeze({
   placeholder1: "Please enter application name",
   label2: "Type",
   placeholder2: "Please enter application type",
-  label3: "Link Key",
-  placeholder3: "Please enter link key (optional)",
+  label3: "Subscription Key",
+  placeholder3: "Please enter your subscription key",
+  label4: "Link Key",
+  placeholder4: "Please enter organization's link key (optional)",
   buttonText: 'Register Now',
 })

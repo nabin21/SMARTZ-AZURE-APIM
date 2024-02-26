@@ -6,19 +6,25 @@
   <div class="flex-columns-container register-app-form">
     <div class="form-group required" :class="{ 'has-warning': warning.name }">
       <label for="name" class="form-label">{{ configs.label1 }}</label>
-      <input id="name" class="form-control" name="name" :placeholder="configs.placeholder1" v-model="applicationName"
+      <input id="name" class="form-control" name="name" :placeholder="configs.placeholder1" v-model="form.name"
         @blur="applicationNameChanged" />
       <div v-if="warning.name" class="warning-message">Application name is required!</div>
     </div>
     <div class="form-group required" :class="{ 'has-warning': warning.type }">
       <label for="type" class="form-label">{{ configs.label2 }}</label>
-      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" v-model="applicationType"
+      <input id="type" class="form-control" name="type" :placeholder="configs.placeholder2" v-model="form.type"
         @blur="applicationTypeChanged" />
       <div v-if="warning.type" class="warning-message">Application type is required!</div>
     </div>
+    <div class="form-group required" :class="{ 'has-warning': warning.subscriptionKey }">
+      <label for="subscriptionKey" class="form-label">{{ configs.label3 }}</label>
+      <input id="subscriptionKey" class="form-control" name="subscriptionKey" :placeholder="configs.placeholder3" v-model="form.subscriptionKey"
+        @blur="subscriptionKeyChanged" />
+      <div v-if="warning.type" class="warning-message">Subscription Key is required!</div>
+    </div>
     <div class="form-group">
-      <label for="linkKey" class="form-label">{{ configs.label3 }}</label>
-      <input id="linkKey" class="form-control" name="linkKey" :placeholder="configs.placeholder3" v-model="applicationLinkKey" />
+      <label for="linkKey" class="form-label">{{ configs.label4 }}</label>
+      <input id="linkKey" class="form-control" name="linkKey" :placeholder="configs.placeholder4" v-model="form.linkKey" />
     </div>
     <div class="form-group text-center">
       <button class="button button-primary submit-button" @click="submit" :disabled="loading">
@@ -48,15 +54,21 @@ export default {
         placeholder2: '',
         label3: '',
         placeholder3: '',
+        label4: '',
+        placeholder4: '',
         buttonText: '',
       },
-      applicationName: null,
-      applicationType: null,
-      applicationLinkKey: null,
+      form: {
+        name: null,
+        type: null,
+        subscriptionKey: null,
+        linkKey: null
+      },
       loading: false,
       warning: {
         name: false,
-        type: false
+        type: false,
+        subscriptionKey: false
       }
     }
   },
@@ -73,28 +85,32 @@ export default {
 
   methods: {
     applicationNameChanged() {
-      this.warning.name = !this.applicationName
+      this.warning.name = !this.form.name
     },
     applicationTypeChanged() {
-      this.warning.type = !this.applicationType
+      this.warning.type = !this.form.type
+    },
+    subscriptionKeyChanged() {
+      this.warning.subscriptionKey = !this.form.subscriptionKey
     },
     submit() {
       const toast = useToast();
-      if (!this.applicationName || !this.applicationType) {
+      if (!this.form.name || !this.form.type || !this.form.subscriptionKey) {
         this.warning = {
-          name: !this.applicationName,
-          type: !this.applicationType
+          name: !this.form.name,
+          type: !this.form.type,
+          subscriptionKey: !this.form.subscriptionKey
         }
         return;
       }
       this.loading = true
       axios.post('https://devapp.smartzhealth.com/api/tapplication/register', {
-        Name: this.applicationName,
-        Type: this.applicationType,
-        LinkKey: this.applicationLinkKey
+        Name: this.form.name,
+        Type: this.form.type,
+        LinkKey: this.form.linkKey
       }, {
         headers: {
-          'x-context-user': '65b883e14634610a882015cf'
+          'x-context-user': this.form.subscriptionKey
         }
       }).then((response) => {
         this.loading = false
@@ -106,8 +122,12 @@ export default {
       })
     },
     resetForm() {
-      this.applicationName = null
-      this.applicationType = null
+      this.form = {
+        name: null,
+        type: null,
+        subscriptionKey: null,
+        linkKey: null
+      }
     }
   }
 }
