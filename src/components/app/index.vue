@@ -1,7 +1,7 @@
 <style src="../../styles/app.scss"></style>
 
 <template>
-  <applicationList />
+  <applicationList ref="applicationList" />
   <h1 class="section-title">{{ configs.title2 }}</h1>
   <div class="flex-columns-container register-app-form">
     <div class="form-group required" :class="{ 'has-warning': warning.name }">
@@ -98,6 +98,7 @@ export default {
         this.loading = false
         toast.success('Registration success')
         this.resetForm()
+        this.$refs.applicationList.getList()
       }).catch(() => {
         this.loading = false
         toast.error('Registration failed')
