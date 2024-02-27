@@ -2,9 +2,10 @@
 
 <template>
     <h1 class="section-title">{{ title }}</h1>
-    <EasyDataTable :headers="headers" :items="items" class="application-list">
-        <template #item-name="{ name }">
-            <span class="application-name">{{ name }}</span>
+    <EasyDataTable :headers="headers" :items="items" :rows-per-page="10" :loading="loading" :hide-rows-per-page="true"
+        class="application-list">
+        <template #item-Name="{ Name, Organisations }">
+            <span class="application-name">{{ Name }}</span>
             <Popper :hover="true" class="poper">
                 <svg t="1708941334668" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     p-id="1513" width="16" height="16" fill="#a7a7a7">
@@ -15,26 +16,27 @@
                 <template #content>
                     <div class="poper-content">
                         <div class="title">Associated Organizations:</div>
-                        <div>
-                            <div class="org-item">Organisation 1</div>
-                            <div class="org-item">Organisation 2</div>
-                            <div class="org-item">Organisation 3</div>
-                            <div class="org-item">Organisation 4</div>
+                        <div v-if="Organisations.length">
+                            <div class="org-item" v-for="item in Organisations">{{ item.Name }}</div>
                         </div>
-                        <!-- <div class="no-data">
+                        <div class="no-data" v-else>
                             No Organisations
-                        </div> -->
+                        </div>
                     </div>
                 </template>
             </Popper>
         </template>
-        <template #item-key="{ id, key, showKey }">
-            <div v-if="showKey" @click="toogleShowKey(id)">{{ key }} <span class="text-a">hidden</span></div>
-            <div v-else @click="toogleShowKey(id)">****** <span class="text-a">show</span></div>
+        <template #item-Key="{ AppId, Key, ShowKey }">
+            <div v-if="ShowKey" @click="toogleShowKey(AppId)">{{ Key }} <span class="text-a">hidden</span></div>
+            <div v-else @click="toogleShowKey(AppId)">****** <span class="text-a">show</span></div>
         </template>
-        <template #item-action="{ id }">
-            <button class="button button-primary small-button" @click.stop="linkOrgnisation(id)">
+        <template #item-Action="{ AppId }">
+            <button class="button button-primary small-button" style="margin-right: 5px;"
+                @click.stop="linkOrgnisation(AppId)">
                 Link Organisation
+            </button>
+            <button class="button button-danger small-button" @click.stop="removeApp(AppId)">
+                Remove Application
             </button>
         </template>
     </EasyDataTable>
@@ -48,23 +50,32 @@ import { useToast } from "vue-toastification";
 import Popper from "vue3-popper";
 import api from "../../api"
 
+interface Item {
+    AppId: string;
+    Name: string;
+    Type: string;
+    Key: string;
+    Action: string;
+    ShowKey: boolean;
+    Organisations: Array<{
+        OrganisationId: string;
+        Name: string;
+    }>;
+}
+
 export default {
     data() {
         return {
+            loading: false,
             title: '',
             headers: [
-                { text: "Application ID", value: "id" },
-                { text: "Application Name", value: "name" },
-                { text: "Application Type", value: "type" },
-                { text: "Application Key", value: "key" },
-                { text: "Action", value: "action" }
+                { text: "Application ID", value: "AppId" },
+                { text: "Application Name", value: "Name" },
+                { text: "Application Type", value: "Type" },
+                { text: "Application Key", value: "Key" },
+                { text: "Action", value: "Action" }
             ],
-            items: [
-                { id: 1, name: "Application 1", type: "APP", key: '123456', showKey: false },
-                { id: 2, name: "Application 2", type: "APP", key: '123456', showKey: false },
-                { id: 3, name: "Application 3", type: "APP", key: '123456', showKey: false },
-                { id: 4, name: "Application 4", type: "WEB", key: '123456', showKey: false },
-            ],
+            items: [] as Item[],
         }
     },
     components: {
@@ -73,13 +84,34 @@ export default {
     async mounted(): Promise<void> {
         let configs = getValues(valuesDefault)
         this.title = configs.title1
+        this.getList()
     },
     methods: {
+        getList() {
+            this.loading = true
+            api.getApplications('65b883e14634610a882015cf').then((response) => {
+                this.loading = false
+                if (response.data.success) {
+                    this.items = response.data.data.map((item: any) => {
+                        return {
+                            ...item,
+                            ShowKey: false
+                        }
+                    })
+                } else {
+                    this.items = []
+                    useToast().error(response.data.msg)
+                }
+            }).catch(() => {
+                this.loading = false
+                useToast().error('OOps, something went wrong')
+            })
+        },
         toogleShowKey(id: any) {
             this.items = this.items.map(item => {
                 return {
                     ...item,
-                    showKey: item.id === id ? !item.showKey : item.showKey
+                    ShowKey: item.AppId === id ? !item.ShowKey : item.ShowKey
                 }
             })
         },
@@ -99,9 +131,11 @@ export default {
                         const response = await api.linkOrganisation({
                             AppId: id,
                             LinkKey: linkKey
-                        }, 'test');
+                        }, '65b883e14634610a882015cf');
                         if (!response.data.success) {
                             return Swal.showValidationMessage(`${response.data.msg}`);
+                        } else {
+                            this.getList()
                         }
                         return response.data;
                     } catch (error) {
@@ -117,6 +151,30 @@ export default {
                     toast.success('Link success')
                 }
             });
+        },
+        removeApp(id: any) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You're about to remove this application!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, remove it!",
+                cancelButtonText: "No, cancel please!",
+                showLoaderOnConfirm: true,
+                allowOutsideClick: () => !Swal.isLoading(),
+                preConfirm: () => {
+                    return api.removeApplication(id, '65b883e14634610a882015cf');
+                },
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        this.getList()
+                    }
+                })
+                .catch((error) => {
+                    Swal.showValidationMessage(`Request failed: ${error.data.message}`);
+                    Swal.hideLoading();
+                });
         }
     }
 }

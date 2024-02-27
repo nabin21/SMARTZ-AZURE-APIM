@@ -15,5 +15,19 @@ export default {
                 'x-context-user': subscriptionKey
             }
         })
+    },
+    getApplications(subscriptionKey: any) {
+        return axios.get(`${baseUrl}/api/tapplication/app`, {
+            headers: {
+                'x-context-user': subscriptionKey
+            }
+        })
+    },
+    removeApplication(id: any, subscriptionKey: any) {
+        return axios.delete(`${baseUrl}/api/tapplication/removeapp?appId=${id}`, {
+            headers: {
+                'x-context-user': subscriptionKey
+            }
+        })
     }
 }
