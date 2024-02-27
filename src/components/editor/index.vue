@@ -39,15 +39,6 @@
              :placeholder="valuesDefault.placeholder3" />
     </div>
     <div class="form-group">
-      <label class="form-label">Label 4</label>
-      <input type="text" class="form-control" v-model="label4" :placeholder="valuesDefault.label4" />
-    </div>
-    <div class="form-group">
-      <label class="form-label">Placeholder 4</label>
-      <input type="text" class="form-control" v-model="placeholder4"
-             :placeholder="valuesDefault.placeholder4" />
-    </div>
-    <div class="form-group">
       <label class="form-label">Button Text</label>
       <input type="text" class="form-control" v-model="buttonText" :placeholder="valuesDefault.buttonText" />
     </div>
@@ -67,10 +58,8 @@ export default {
       placeholder1: "Please enter application name",
       label2: "Type",
       placeholder2: "Please enter application type",
-      label3: "Subscription Key",
-      placeholder3: "Please enter your subscription key",
-      label4: "Link Key",
-      placeholder4: "Please enter organisation's link key (optional)",
+      label3: "Link Key",
+      placeholder3: "Please enter organisation's link key (optional)",
       buttonText: 'Register Now',
       valuesDefault
     }
@@ -89,8 +78,6 @@ export default {
     this.placeholder2 = editorData.placeholder2
     this.label3 = editorData.label3
     this.placeholder3 = editorData.placeholder3
-    this.label4 = editorData.label4
-    this.placeholder4 = editorData.placeholder4
     this.buttonText = editorData.buttonText
   },
 
@@ -118,12 +105,6 @@ export default {
     },
     placeholder3(newValue: string): void {
       this.onChange({placeholder3: newValue})
-    },
-    label4(newValue: string): void {
-      this.onChange({label4: newValue})
-    },
-    placeholder4(newValue: string): void {
-      this.onChange({placeholder4: newValue})
     },
     buttonText(newValue: string): void {
       this.onChange({buttonText: newValue})

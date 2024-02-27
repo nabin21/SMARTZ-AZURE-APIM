@@ -16,15 +16,9 @@
         @blur="applicationTypeChanged" />
       <div v-if="warning.type" class="warning-message">Application type is required!</div>
     </div>
-    <div class="form-group required" :class="{ 'has-warning': warning.subscriptionKey }">
-      <label for="subscriptionKey" class="form-label">{{ configs.label3 }}</label>
-      <input id="subscriptionKey" class="form-control" name="subscriptionKey" :placeholder="configs.placeholder3" v-model="form.subscriptionKey"
-        @blur="subscriptionKeyChanged" />
-      <div v-if="warning.type" class="warning-message">Subscription Key is required!</div>
-    </div>
     <div class="form-group">
-      <label for="linkKey" class="form-label">{{ configs.label4 }}</label>
-      <input id="linkKey" class="form-control" name="linkKey" :placeholder="configs.placeholder4" v-model="form.linkKey" />
+      <label for="linkKey" class="form-label">{{ configs.label3 }}</label>
+      <input id="linkKey" class="form-control" name="linkKey" :placeholder="configs.placeholder3" v-model="form.linkKey" />
     </div>
     <div class="form-group text-center">
       <button class="button button-primary submit-button" @click="submit" :disabled="loading">
@@ -54,21 +48,17 @@ export default {
         placeholder2: '',
         label3: '',
         placeholder3: '',
-        label4: '',
-        placeholder4: '',
         buttonText: '',
       },
       form: {
         name: null,
         type: null,
-        subscriptionKey: null,
         linkKey: null
       },
       loading: false,
       warning: {
         name: false,
-        type: false,
-        subscriptionKey: false
+        type: false
       }
     }
   },
@@ -90,16 +80,12 @@ export default {
     applicationTypeChanged() {
       this.warning.type = !this.form.type
     },
-    subscriptionKeyChanged() {
-      this.warning.subscriptionKey = !this.form.subscriptionKey
-    },
     submit() {
       const toast = useToast();
-      if (!this.form.name || !this.form.type || !this.form.subscriptionKey) {
+      if (!this.form.name || !this.form.type) {
         this.warning = {
           name: !this.form.name,
-          type: !this.form.type,
-          subscriptionKey: !this.form.subscriptionKey
+          type: !this.form.type
         }
         return;
       }
@@ -108,7 +94,7 @@ export default {
         Name: this.form.name,
         Type: this.form.type,
         LinkKey: this.form.linkKey
-      }, this.form.subscriptionKey).then((response) => {
+      }, '65b883e14634610a882015cf').then((response) => {
         this.loading = false
         toast.success('Registration success')
         this.resetForm()
@@ -121,7 +107,6 @@ export default {
       this.form = {
         name: null,
         type: null,
-        subscriptionKey: null,
         linkKey: null
       }
     }
