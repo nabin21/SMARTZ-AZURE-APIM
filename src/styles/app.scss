@@ -183,6 +183,15 @@ textarea {
       }
     }
   }
+  .key-box {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    word-wrap: break-word;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 
 @keyframes spin {

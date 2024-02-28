@@ -77,7 +77,9 @@ export default {
     if (secrets && secrets.userId) {
       this.userId = secrets.userId;
     }
-
+    setTimeout(() => {
+      this.$refs.applicationList.getList()
+    }, 500);
   },
 
   methods: {
