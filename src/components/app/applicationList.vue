@@ -78,6 +78,13 @@ export default {
             items: [] as Item[],
         }
     },
+    props: {
+        userId: {
+            type: String,
+            required: true,
+            default: ''
+        }
+    },
     components: {
         Popper
     },
@@ -89,7 +96,7 @@ export default {
     methods: {
         getList() {
             this.loading = true
-            api.getApplications('65b883e14634610a882015cf').then((response) => {
+            api.getApplications(this.userId).then((response) => {
                 this.loading = false
                 if (response.data.success) {
                     this.items = response.data.data.map((item: any) => {
@@ -131,7 +138,7 @@ export default {
                         const response = await api.linkOrganisation({
                             AppId: id,
                             LinkKey: linkKey
-                        }, '65b883e14634610a882015cf');
+                        }, this.userId);
                         if (!response.data.success) {
                             return Swal.showValidationMessage(`${response.data.msg}`);
                         } else {
@@ -163,7 +170,7 @@ export default {
                 showLoaderOnConfirm: true,
                 allowOutsideClick: () => !Swal.isLoading(),
                 preConfirm: () => {
-                    return api.removeApplication(id, '65b883e14634610a882015cf');
+                    return api.removeApplication(id, this.userId);
                 },
             })
                 .then((result) => {

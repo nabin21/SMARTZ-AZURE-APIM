@@ -1,7 +1,7 @@
 <style src="../../styles/app.scss"></style>
 
 <template>
-  <applicationList ref="applicationList" />
+  <applicationList ref="applicationList" :userId="userId" />
   <h1 class="section-title">{{ configs.title2 }}</h1>
   <div class="flex-columns-container register-app-form">
     <div class="form-group required" :class="{ 'has-warning': warning.name }">
@@ -59,7 +59,9 @@ export default {
       warning: {
         name: false,
         type: false
-      }
+      },
+      userId: '',
+      // userId: '65b883e14634610a882015cf'
     }
   },
 
@@ -71,6 +73,11 @@ export default {
 
   async mounted(): Promise<void> {
     this.configs = getValues(valuesDefault)
+    const [secrets, request] = await Promise.all([this.secretsPromise, this.requestPromise])
+    if (secrets && secrets.userId) {
+      this.userId = secrets.userId;
+    }
+
   },
 
   methods: {
@@ -94,7 +101,7 @@ export default {
         Name: this.form.name,
         Type: this.form.type,
         LinkKey: this.form.linkKey
-      }, '65b883e14634610a882015cf').then((response) => {
+      }, this.userId).then((response) => {
         this.loading = false
         toast.success('Registration success')
         this.resetForm()
