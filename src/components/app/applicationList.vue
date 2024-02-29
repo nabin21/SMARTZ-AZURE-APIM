@@ -29,7 +29,7 @@
             </div>
         </template>
         <template #item-Key="{ AppId, Key, ShowKey }">
-            <div v-if="ShowKey" @click="toogleShowKey(AppId)" class="key-box">{{ Key }} <span class="text-a">hidden</span></div>
+            <div v-if="ShowKey" class="key-box">{{ Key }} <span class="text-a" @click="toogleShowKey(AppId)">hidden</span></div>
             <div v-else @click="toogleShowKey(AppId)">****** <span class="text-a">show</span></div>
         </template>
         <template #item-Action="{ AppId }">
@@ -75,7 +75,7 @@ export default {
                 { text: "Application Name", value: "Name" },
                 { text: "Application Type", value: "Type" },
                 { text: "Application Key", value: "Key" },
-                { text: "Action", value: "Action", width: 350 }
+                { text: "Action", value: "Action", width: 150 }
             ],
             items: [] as Item[],
         }
