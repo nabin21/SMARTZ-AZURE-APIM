@@ -45,21 +45,9 @@ body {
     border-right: 1px solid rgba(167, 51, 51, 0);
     border-bottom: 1px solid rgba(167, 51, 51, 0);
     padding: 9px 50px;
-    background-color: rgba(254, 213, 60, 1);
+    background-color: #3D5A80;
     border-radius: 3px;
-    cursor: pointer;
-  }
-  &.button-danger {
-    border-top: 1px solid rgba(167, 51, 51, 0);
-    box-shadow: 2px 2px 5px 1px rgb(0 0 0 / 13%);
-    font-style: normal;
-    border-left: 1px solid rgba(167, 51, 51, 0);
-    font-weight: 400;
-    border-right: 1px solid rgba(167, 51, 51, 0);
-    border-bottom: 1px solid rgba(167, 51, 51, 0);
-    padding: 9px 50px;
-    background-color: #F56C6C;
-    border-radius: 3px;
+    color: white;
     cursor: pointer;
   }
 }
@@ -159,8 +147,22 @@ textarea {
     margin-right: 5px;
     display: inline-block;
   }
-  .small-button {
-    padding: 5px 20px !important;
+  .operator-button {
+    border-top: 1px solid rgba(167, 51, 51, 0);
+    box-shadow: 2px 2px 5px 1px rgb(0 0 0 / 13%);
+    font-style: normal;
+    border-left: 1px solid rgba(167, 51, 51, 0);
+    font-weight: 400;
+    border-right: 1px solid rgba(167, 51, 51, 0);
+    border-bottom: 1px solid rgba(167, 51, 51, 0);
+    padding: 5px 15px;
+    background-color: #3D5A80;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    &.danger {
+      background-color: #F56C6C;
+    }
   }
   .poper {
     cursor: pointer;
